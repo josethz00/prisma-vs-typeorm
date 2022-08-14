@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  benchmark_api_db:
+    build:
+      context: .docker/postgres/
+      dockerfile: Dockerfile.dev
+    container_name: benchmark-api-db-container
+    environment:
+      POSTGRES_USER: benchmark-api-db
+      POSTGRES_PASSWORD: benchmark-api-db
+      POSTGRES_DB: benchmark-api-db
+    networks:
+      - user-network
+    ports:
+      - "9120:5432"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U benchmark-api-db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  benchmark_api_db_typeorm:
+    build:
+      context: .docker/postgres/
+      dockerfile: Dockerfile.dev
+    container_name: benchmark-api-db-typeorm-container
+    environment:
+      POSTGRES_USER: benchmark-api-db-typeorm
+      POSTGRES_PASSWORD: benchmark-api-db-typeorm
+      POSTGRES_DB: benchmark-api-db-typeorm
+    networks:
+      - user-network
+    ports:
+      - "9122:5432"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U benchmark-api-db-typeorm"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  user-network:
+    driver: bridge
+  proxynet:
+    name: custom_network
