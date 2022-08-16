@@ -2,15 +2,7 @@ import { faker } from '@faker-js/faker'
 import { AppDataSource } from '../data-source'
 import { Repository } from 'typeorm';
 import { UserModel } from './user.model'
-
-const userGroups = [
-  'admin',
-  'user',
-  'guest',
-  'superuser',
-  'superadmin',
-  'customer'
-]
+import { userGroups } from '../userGroups';
 
 const createManyUsers = async (count: number) => {
   const fCount = count.toLocaleString('en-US')

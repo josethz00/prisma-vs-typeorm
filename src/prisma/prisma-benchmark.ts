@@ -1,15 +1,8 @@
 import { PrismaClient } from '@prisma/client'
 import { faker } from '@faker-js/faker'
+import { userGroups } from '../userGroups'
 
 const prisma = new PrismaClient()
-const userGroups = [
-  'admin',
-  'user',
-  'guest',
-  'superuser',
-  'superadmin',
-  'customer'
-]
 
 const createManyUsers = async (count: number) => {
   const fCount = count.toLocaleString('en-US')
